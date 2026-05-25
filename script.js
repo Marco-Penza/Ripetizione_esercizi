@@ -2,7 +2,7 @@ const bottone = document.getElementById("btn");
 const testo = document.getElementById("testo");
 
 bottone.addEventListener("click", function() {
-    testo.textContent = "Un Mangherillo!!!";
+    testo.textContent = "";
 });
 /*
 let nome1 = 'Marco';
@@ -165,3 +165,20 @@ const persona = {
 
 console.log(persona.descrivi())
 */
+//Crea una classe animale con: proprieta nome specie eta, costruttore con questi parametri descrivi() che stampa sono nome, un specie di eta anni.
+//Crea 2 istanze diverse e chiama descrivi su entrambe.
+class Animale {
+    constructor(nome, specie, eta) {
+        this.nome = nome,
+        this.specie = specie,
+        this.eta = eta
+    }
+    descrivi() {
+        console.log(`Sono ${this.nome}, un ${this.specie} di ${this.eta.anni} anni, ${this.eta.mesi} mesi e ${this.eta.giorni} giorni`);
+    }
+}
+
+const cane = new Animale("Fuffy", "cane", {anni: 3, mesi: 2, giorni: 5});
+cane.descrivi()
+const gatto = new Animale("Minny", "gatto", {anni: 0, mesi: 5, giorni: 9});
+gatto.descrivi()
