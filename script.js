@@ -1,7 +1,7 @@
 const bottone = document.getElementById("btn");
 const testo = document.getElementById("testo");
 
-bottone.addEventListener("click", function() {
+bottone.addEventListener("click", function () {
     testo.textContent = "";
 });
 /*
@@ -164,7 +164,7 @@ const persona = {
 }
 
 console.log(persona.descrivi())
-*/
+
 //Crea una classe animale con: proprieta nome specie eta, costruttore con questi parametri descrivi() che stampa sono nome, un specie di eta anni.
 //Crea 2 istanze diverse e chiama descrivi su entrambe.
 class Animale {
@@ -182,3 +182,200 @@ const cane = new Animale("Fuffy", "cane", {anni: 3, mesi: 2, giorni: 5});
 cane.descrivi()
 const gatto = new Animale("Minny", "gatto", {anni: 0, mesi: 5, giorni: 9});
 gatto.descrivi()
+
+//Crea una classe calcolatrice con proprietà risultato iniziale 0, metodo aggiungi(n) sottrai(n) moltiplica(n) reset() stampa() usala per fare 10 + 5 - 2 *3 e stampa il risultato.
+
+class Calcolatrice {
+    constructor() {
+        this.risultato = 0;
+    }
+    aggiungi(n) {
+        this.risultato = this.risultato + n;
+    }
+    sottrai(n) {
+        this.risultato = this.risultato - n;
+    }
+    moltiplica(n) {
+        this.risultato = this.risultato * n;
+    }
+    reset() {
+        this.risultato = 0;
+    }
+    stampa() {
+        console.log(this.risultato);
+    }
+}
+
+const conteggio = new Calcolatrice()
+
+
+conteggio.aggiungi(10);
+conteggio.aggiungi(5);
+conteggio.sottrai(2);
+conteggio.moltiplica(3)
+conteggio.stampa();
+
+//EREDITARIETA crea una classe base persona(nome cognome eta) con metodo saluta che stampa ciao sono nome cognome.
+//Crea una classe Studente che extends persona con proprieta extra universita e metodo studia che stampa nome sta studiando a universita crea istanza di entrambe
+
+class Persona {
+    constructor(nome, cognome, eta) {
+        this.nome = nome,
+        this.cognome = cognome,
+        this.eta = eta
+    }
+    saluta() {
+        console.log(`Salve, sono ${this.nome} ${this.cognome}`)
+    };
+}
+
+class Studente extends Persona {
+    constructor(nome, cognome, eta, universita) {
+        super(nome, cognome, eta);
+        this.universita = universita;
+    }
+    studia() {
+        console.log(`la persona ${this.nome} sta studiando presso ${this.universita}`);
+    }
+}
+const Marco = new Studente("marco", "penza", 20, "Bocconi");
+Marco.studia();
+Marco.saluta();
+
+
+
+//Crea dipendente(nome,stipendioBase) con metodo calcolaStipendio() che restituisce stipendioBase
+//Crea Manager(nome, stipendioBase, bonus) che estende Dipendente e fa override di calcolaStipendio() usando super per aggiungere il bonus
+//stampa lo stipendio di un dipendente e di un manager.
+
+class Dipendente {
+    constructor(nome, stipendioBase) {
+        this.nome = nome;
+        this.stipendioBase = stipendioBase;
+    }
+    calcolaStipendio() {
+        console.log(this.stipendioBase);
+    }
+}
+
+class Manager extends Dipendente {
+    constructor(nome, stipendioBase, bonus) {
+        super(nome, stipendioBase);
+        this.bonus = bonus;
+    }
+    calcolaStipendio() {
+        const totale = this.stipendioBase + this.bonus;
+        console.log(totale);
+    }
+}
+
+const pippo = new Dipendente("pippo", 5000);
+pippo.calcolaStipendio();
+
+const gianni = new Manager("gianni", 5000, 1);
+gianni.calcolaStipendio();
+
+
+//Dato questo oggetto utente:
+//{nome:"Giulia", eta:28, città:"Roma", lavoro:"sviluppatrice"}
+
+//• Estrai nome e eta in variabili
+//• Estrai città rinominandola residenza
+//• Estrai professione con default "non specificato" (non esiste nell'oggetto)
+
+//Stampa tutto.
+const utente = {
+    nome:"Giulia",
+     eta:28, citta:"Roma",
+      lavoro:"sviluppatrice"
+};
+
+const { nome, eta, citta: residenza, professione = "non specificato" } = utente;
+console.log(nome);
+console.log(eta);
+console.log(residenza);
+console.log(professione);
+
+//Crea una funzione stampaUtente({nome, eta, città = "sconosciuta"}) che accetta un oggetto e stampa "Nome: [nome] | Età: [eta] | Città: [città]".
+//Chiamala con oggetti diversi, uno senza la città.
+
+function stampaUtente({nome, eta, città = "sconosciuta"}) 
+    {
+    console.log(`Nome: ${nome} | Età: ${eta} | Città: ${città}`);
+    }
+
+stampaUtente({ nome: "Giulia", eta: 28, città: "Roma"});
+
+
+// 1. Oggetto completo
+const film1 = { titolo: "Inception", anno: 2010, regista: "Christopher Nolan", rating: 9 };
+
+// 2. Senza regista e senza rating
+const film2 = { titolo: "Film Misterioso", anno: 2024 };
+
+// 3. Con una proprietà che si chiama 'regista' (che deve essere rinominata in 'autore')
+const film3 = { titolo: "Il Gladiatore", anno: 2000, regista: "Ridley Scott" };
+
+//Obbiettibo, crea una funzione mostraInfoFilm({ titolo, anno, regista: autore = "Anonimo", rating = 5 }) che accetta un oggetto film
+
+function mostraInfoFilm({ titolo, anno, regista: autore = "Anonimo", rating = 5 }) {
+    console.log(`Titolo: ${titolo}, Anno: ${anno}, Regista/Autore: ${autore}, Rating: ${rating}`);
+}
+
+mostraInfoFilm(film1);
+mostraInfoFilm(film2);
+mostraInfoFilm(film3);
+
+
+// Crea una funzione stampaUtente({...}) che prende nome eta default non specificata, email non disponibile e ruolo rinominato in tipoUtente default = "guest"
+const utente2 = {
+    nome: "Sara",
+    eta: 30
+};
+
+const utente3 = {
+    nome: "Marco",
+    email: "marco@mail.com",
+    ruolo: utente
+};
+
+function stampaUtente({
+    nome,
+     eta = "non specificata",
+      email = "non disponibile",
+      ruolo: tipoUtente = "guest"
+    }) {
+    }
+*/
+
+//crea funzione stampaProdotto(...) estrarre nome prezzo categoria default generico e stock 0
+const prodotto1 = {
+    nome: "iPhone 15",
+    prezzo: 1200,
+    categoria: "smartphone",
+    stock: 5
+};
+
+const prodotto2 = {
+    nome: "Samsung TV",
+    prezzo: 800
+};
+
+const prodotto3 = {
+    nome: "MacBook Pro",
+    prezzo: 2500,
+    categoria: "laptop"
+};
+
+function stampaProdotto({
+    nome,
+    prezzo,
+    categoria: tipoCategoria = "generico",
+    stock: tipoStock = 0
+}) {
+    console.log(nome, prezzo, tipoCategoria, tipoStock);
+}
+stampaProdotto({
+    nome: "iPhone",
+    prezzo: 1200
+});
