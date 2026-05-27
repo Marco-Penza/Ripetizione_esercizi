@@ -346,7 +346,7 @@ function stampaUtente({
       ruolo: tipoUtente = "guest"
     }) {
     }
-*/
+
 
 //crea funzione stampaProdotto(...) estrarre nome prezzo categoria default generico e stock 0
 const prodotto1 = {
@@ -377,5 +377,125 @@ function stampaProdotto({
 }
 stampaProdotto({
     nome: "iPhone",
-    prezzo: 1200
+    prezzo: 1200,
+    categoria: "elettronica",
+    stock: 0
 });
+
+
+//SPREAD CON ARRAY hai numeriA = [1,2,3] e numeriB = [4,5,6].
+//- Crea tuttiNumeri unendo i due array senza concat
+//- Crea numeriExtra aggiungendo 0 all inizio e 7 alla fine
+//- Crea una copia indipendente di numeriA e modifica la copia
+//- Verifica che la copia sia cambiata
+
+const numeriA = [1, 2, 3];
+const numeriB = [4, 5, 6];
+
+const tuttiNumeri = [...numeriA, ...numeriB]
+console.log(tuttiNumeri)
+
+const numeriExtra = [0, ...tuttiNumeri, 7]
+console.log(numeriExtra)
+
+const numeriA1 = [...numeriA, 7];
+console.log(numeriA1)
+
+
+//Spread con oggetti
+//Hai un oggetto base: {nome:"Mario", ruolo:"user", attivo:false}.
+
+//• Crea una copia identica con spread
+//• Crea un oggetto admin partendo da base con ruolo:"admin", nome Gennaro e attivo:true
+//• Unisci due oggetti: {a:1, b:2} e {b:99, c:3} e spiega nel console.log cosa succede a b
+
+const base = {
+    nome:"Mario",
+    ruolo:"user",
+    attivo:false
+}
+
+const base1 = { ...base
+}
+console.log(base1)
+
+const admin = {
+    ...base,
+    nome:"Gennaro",
+    ruolo:"admin",
+    attivo:true
+}
+console.log(admin)
+
+const oggetto1 = {
+    a:1,
+    b:2
+}
+const oggetto2 = {
+    b:99,
+    c:3
+}
+const oggettiUniti = {
+    ...oggetto1,
+    ...oggetto2
+}
+console.log(oggettiUniti)
+
+//Crea una funzione somma(...numeri) che accetta un numero qualsiasi di argomenti e restituisce la loro somma.
+//Crea una funzione prima(primo, ...resto) che stampa il primo elemento e poi tutti gli altri separati da virgola.
+//Testale con valori diversi.
+
+
+function somma(...numeri) {
+    let totale = 0;
+    for (let i = 0; i < numeri.length; i++)
+        totale = totale + numeri[i];
+    console.log(totale)
+}
+
+somma(1,2,3,4,5)
+
+//Versione Moderna
+// let totale = 0;
+// numeri.forEach((n) => {
+//    totale += n;
+// });
+
+function prima(primo, ...resto) { 
+    console.log(primo)
+    console.log(` il resto è ${resto.join(",")}`)
+}
+prima(10,20,30)
+*/
+//Promise e then
+//Crea una funzione attendi(ms) che restituisce una Promise che si risolve dopo ms millisecondi (usa setTimeout).
+//Chiamala con .then() e stampa "aspettato X ms" quando finisce.
+//Poi crea una Promise che si rifiuta e gestisci l'errore con .catch()
+
+// funzione che aspetta ms millisecondi
+function attendi(ms) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(ms);
+        }, ms);
+    });
+}
+function fallisci() {
+    return new Promise((resolve, reject) => {
+        reject("qualcosa è andato storto");
+    });
+}
+
+async function esegui() {
+    try {
+        const ms = await attendi(2000);
+        console.log(`aspettato ${ms} ms`);
+
+        await fallisci();
+        console.log("successo"); // Non arriverà mai qui
+    } catch (errore) {
+        console.log("errore:", errore);
+    }
+} 
+
+esegui();
