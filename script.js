@@ -559,17 +559,55 @@ function parseJson(testo) {
 }
 console.log(parseJson('{"nome":"Marco"}'));
 console.log(parseJson('non valido'));
-*/
+
 //fetch + try/catch + gestione errore
 //Obbiettivo creare funzione getUser() che prende un utente da API - se funziona stampa i dati - se fallisce stampa errore
 
 async function getUser() {
     try {
         const response = await fetch('https://jsonplaceholder.typicode.com/users/1')
+
         const data = await response.json()
-        console.log(data)
+
+        console.log(data.name);
+        console.log(data.email);
+        console.log(data.username);
     } catch (err) {
         console.log("errore", err)
     }
+} //fetch -> Promise: risposta dal server -> Response -> JSON() -> Promise: parsing dati -> Oggetto JS finale
+getUser();
+
+//Crea fimzopme getPost() che prende un post da:https://jsonplaceholder.typicode.com/posts/1 stampa title body e usa async await try catch
+
+async function getPost() {
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts/1')
+        const data = await response.json();
+        console.log(data.title)
+        console.log(data.body)
+    } catch (err) {
+        console.log("Errore", err)
+    }
 }
-getUser()
+getPost()
+*/
+//Esercizio usare API: https://jsonplaceholder.typicode.com/posts scrivi una funzione getPosts() che deve prendere tutti i post e filtrare solo quelli con userId === 1 e stampare solo i titoli
+async function getPosts() {
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const data = await response.json();
+        const userPosts = data.filter((post) => {
+            return todo.userId === 1
+        })
+        const userTitle = userPosts.map((post) => {
+            return todo.title
+        })
+        console.log(userPosts)
+        console.log(userTitle)
+    } catch (err) {
+
+    }
+}
+
+getPosts();
