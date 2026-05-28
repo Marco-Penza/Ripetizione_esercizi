@@ -519,7 +519,7 @@ async function esegui() {
     }
 }
 esegui();
-*/
+
 //Filtrare dati da API
 //Usa fetch per chiamare 
 //https://jsonplaceholder.typicode.com/todos
@@ -543,3 +543,33 @@ async function caricaTodos() {
 }
 
 caricaTodos();
+
+//try/catch base 
+//JSON.parse() lancia un errore se la stringa non è JSON valido.
+
+function parseJson(testo) {
+    try {
+        const obj = JSON.parse(testo);
+        console.log("OK:", obj);
+        return obj;
+    } catch (err) {
+        console.log("Errore:", err.message)
+        return null;
+    }
+}
+console.log(parseJson('{"nome":"Marco"}'));
+console.log(parseJson('non valido'));
+*/
+//fetch + try/catch + gestione errore
+//Obbiettivo creare funzione getUser() che prende un utente da API - se funziona stampa i dati - se fallisce stampa errore
+
+async function getUser() {
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/users/1')
+        const data = await response.json()
+        console.log(data)
+    } catch (err) {
+        console.log("errore", err)
+    }
+}
+getUser()
