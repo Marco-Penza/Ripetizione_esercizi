@@ -466,13 +466,14 @@ function prima(primo, ...resto) {
     console.log(` il resto è ${resto.join(",")}`)
 }
 prima(10,20,30)
-*/
+
 //Promise e then
 //Crea una funzione attendi(ms) che restituisce una Promise che si risolve dopo ms millisecondi (usa setTimeout).
 //Chiamala con .then() e stampa "aspettato X ms" quando finisce.
 //Poi crea una Promise che si rifiuta e gestisci l'errore con .catch()
 
 // funzione che aspetta ms millisecondi
+
 function attendi(ms) {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -499,3 +500,46 @@ async function esegui() {
 } 
 
 esegui();
+
+//Riscrivi questa funzione usando async/await:
+//fetch('https://jsonplaceholder.typicode.com/users/1')
+//.then(r => r.json())
+//.then(data => console.log(data.name))
+
+
+async function esegui() {
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/users/1')
+        const data = await response.json()
+        console.log(data.name)
+        console.log(data.email)
+        console.log(data.username)
+    } catch (errore) {
+        console.log("errore", errore)
+    }
+}
+esegui();
+*/
+//Filtrare dati da API
+//Usa fetch per chiamare 
+//https://jsonplaceholder.typicode.com/todos
+//Poi filtra solo i todo con userid === 1
+//Tra quelli, stampa solo i completati (completed === true)
+//Stampa quanti sono in totale
+async function caricaTodos() {
+  const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+  const todos = await response.json();
+  const userTodos = todos.filter((todo) => {
+    return todo.userId === 1
+  })
+
+  const completedTodos = userTodos.filter((todo) => {
+    return todo.completed === true
+  })
+
+  console.log(userTodos)
+  console.log(completedTodos)
+  console.log(completedTodos.length)
+}
+
+caricaTodos();
