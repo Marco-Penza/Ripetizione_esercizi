@@ -591,7 +591,7 @@ async function getPost() {
     }
 }
 getPost()
-*/
+
 //Esercizio usare API: https://jsonplaceholder.typicode.com/posts scrivi una funzione getPosts() che deve prendere tutti i post e filtrare solo quelli con userId === 1 e stampare solo i titoli
 async function getPosts() {
     try {
@@ -611,3 +611,102 @@ async function getPosts() {
 }
 
 getPosts();
+
+
+//Crea dividi(a,b) che: Se b === 0: throw new Error("Divisione per zero"), Se a o b non sono number:throw new TypeError("Solo numeri"), Altrimenti restituisce a / b;
+//Chiamala 4 vole in try/catch separati: 10/2, 10/0, "ciao"/2, 5/2
+
+function dividi(a,b) {
+    if (b === 0) {
+        throw new Error("divisione per zero")
+    }
+    if (typeof a !== "number" || typeof b !== "number") {
+        throw new TypeError("Solo numeri")
+    }
+    return a / b;
+}
+
+try {
+    const risultato = dividi(10, 100);
+    console.log(risultato);
+} catch (err) {
+    console.log("Errore:", err.message);
+}
+
+try {
+    console.log(dividi(10,2));
+} catch (err) {
+    console.log("errore nel risultato 1", err);
+}
+
+try {
+    console.log(dividi(10,0));
+} catch (err) {
+    console.log(err.message);
+}
+
+try {
+    console.log(dividi("ciao",2));
+} catch (err) {
+    console.log(err.message);
+}
+
+try {
+    console.log(dividi(5,2))
+} catch (err) {
+    console.log(err.message)
+}
+
+function eseguiDivisione(a,b) {
+    try {
+        console.log(dividi(a,b))
+    } catch (err) {
+        console.log(err.message)
+    }
+}
+
+eseguiDivisione(10,2);
+eseguiDivisione(10,0);
+eseguiDivisione("ciao",2);
+eseguiDivisione(5,2);
+*/
+
+//Simula una connessione DB: connetti(url) se url vuota lancia Error- eseguiQuery(db,sql) - se sql contiene "drop" lancia error- disconnetti(db) stampa "connessione chiusa" 
+//Crea anche eseguiQuerysicura(url,sql) con try catch finally che chiude sempre la connessione anche in caso di errore
+
+function connetti(url) {
+    if (!url) {
+        throw new Error("URL mancante o non valido");
+    }
+    return {url}
+}
+
+function eseguiQuery(db, sql) {
+
+    if (sql.includes("DROP")) {
+        throw new Error("Query pericolosa")
+    }
+    return `Query eseguita: ${sql}`;
+}
+
+function disconnetti(db) {
+    console.log("Connessione chiusa");
+}
+
+function eseguiQuerySicura(url,sql) {
+    let db;
+    try {
+        db = connetti(url);
+        const risultato = eseguiQuery(db,sql);
+        console.log(risultato);
+    } catch (err) {
+        console.log("Errore:", err.message);
+    } finally {
+        disconnetti(db);
+    }
+}
+eseguiQuerySicura("mysql://localhost", "SELECT * FROM users");
+//Query mancante
+eseguiQuerySicura("", "SELECT * FROM users");
+//Query pericolosa
+eseguiQuerySicura("mysql://localhost", "DROP TABLE users")
