@@ -669,7 +669,7 @@ eseguiDivisione(10,2);
 eseguiDivisione(10,0);
 eseguiDivisione("ciao",2);
 eseguiDivisione(5,2);
-*/
+
 
 //Simula una connessione DB: connetti(url) se url vuota lancia Error- eseguiQuery(db,sql) - se sql contiene "drop" lancia error- disconnetti(db) stampa "connessione chiusa" 
 //Crea anche eseguiQuerysicura(url,sql) con try catch finally che chiude sempre la connessione anche in caso di errore
@@ -680,6 +680,7 @@ function connetti(url) {
     }
     return {url}
 }
+//esempio const db = connetti("mysql://localhost"); db diventa { url: "mysql://localhost"}
 
 function eseguiQuery(db, sql) {
 
@@ -705,8 +706,114 @@ function eseguiQuerySicura(url,sql) {
         disconnetti(db);
     }
 }
-eseguiQuerySicura("mysql://localhost", "SELECT * FROM users");
+eseguiQuerySicura(
+    "mysql://localhost", "SELECT * FROM users");
 //Query mancante
 eseguiQuerySicura("", "SELECT * FROM users");
 //Query pericolosa
 eseguiQuerySicura("mysql://localhost", "DROP TABLE users")
+
+
+//Optional chaining ?.
+//Hai questi oggetti con strutture diverse:
+
+const u1 = {
+    nome: "Marco",
+    indirizzo: {città:"Napoli",
+        cap: "80100"
+    }
+}
+const u2 = {
+    nome: "Anna",
+    indirizzo: {città:"Roma"
+    }
+}
+const u3 = {
+    nome: "Luca"
+}
+const u4 = null
+
+//Crea ottieniInfo(u) che stampa nome, città e CAP.
+//Usa ?. e ?? — senza if/else. Se manca, mostra "sconosciuta"/"n/d".
+
+function ottieniInfo(u) {
+   const nome = u?.nome ?? "sconosciuta"
+   const city = u?.indirizzo?.città ?? "sconosciuta"
+   const cap = u?.indirizzo?.cap ?? "n/d"
+   return console.log(`nome ${nome}, città ${city}, cap è ${cap}`)
+}
+ottieniInfo(u1);
+ottieniInfo(u2);
+ottieniInfo(u3);
+ottieniInfo(u4);
+
+
+//?? vs ||
+//Differenza importante:
+//• || usa il default se il valore è falsy (0, false, "", null, undefined)
+//• ?? usa il default SOLO se è null o undefined
+
+//Dimostrazione con saldo=0 e attivo=false.
+//Poi crea impostazioniApp(config) con ?? per i default:
+//{volume:50, debug:false, nome:"Utente", lingua:"it", timeout:5000}
+const saldo = 0 
+const attivo = false
+saldo || 100    //risultato 100
+attivo || true   //risultato true
+// || troppo aggressivo (blocca anche valori validi come 0)
+// ?? piu preciso
+
+const appDefault = {
+    volume: 50,
+    debug: false,
+    nome: "Utente",
+    lingua: "it",
+    timeout: 5000
+}
+
+function impostazioniApp(config) {
+    const volume = config.volume?? 50
+    const debug = config.debug?? false
+    const nome = config.nome?? "Utente"
+    const lingua = config.lingua?? "it"
+    const timeout = config.timeout?? 5000
+    console.log(`volume è ${volume} - il debug è ${debug} - nome: ${nome} - lingua: ${lingua} - timeout: ${timeout}`)
+}
+impostazioniApp({})
+
+//Map base
+//Crea una rubrica con Map:
+//• Aggiungi 4 contatti con .set(nome, numero)
+//• Controlla se un nome esiste con .has()
+//• Prendi un numero con .get()
+//• Rimuovi un contatto con .delete()
+//• Stampa tutti con for...of
+//• Stampa quanti contatti con .size
+
+const rubrica = new Map();
+rubrica.set("Marco", "123");
+rubrica.set("Gianni", "456");
+rubrica.set("Filippo", "789");
+rubrica.set("Lello", "487");
+const giggino = rubrica.has("Marco");
+console.log(giggino)
+
+const rimuovereNumero = rubrica.delete("Gianni")
+
+const numeroGianni = rubrica.get("Gianni");
+console.log(numeroGianni);
+console.log(rubrica);
+
+for (const[nome, numero] of rubrica) {
+    console.log(nome, numero);
+}
+
+const checkNumeri = rubrica.size
+console.log(checkNumeri);
+// .set() - aggiungi
+// .get() - leggi
+// .has() - controlla
+// .delete() - rimuovi
+// .size - conteggio
+// for ... of - scorrere
+*/
