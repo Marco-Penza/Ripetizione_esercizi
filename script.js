@@ -816,4 +816,106 @@ console.log(checkNumeri);
 // .delete() - rimuovi
 // .size - conteggio
 // for ... of - scorrere
+
+//Set valori unici
+//1 Rimuovi duplicati da [1,2,3,4,1,5,3,6,5]
+//2 Set di frutti aggiungi, rimuovi usa .has() e .size
+//Intersezione:dati[1,2,3,4,5] e [3,4,5,6,7], trova i numeri in entrambi usando Set
+new Set([1, 2, 2, 3, 3, 3])
+
+const duplicati = [1,2,3,4,1,5,3,6,5];
+const senzaDuplicati = new Set(duplicati)
+console.log(senzaDuplicati)
+
+const ritornoDuplicati = [...senzaDuplicati]
+console.log(ritornoDuplicati)
+
+const frutti = new Set([])
+frutti.add("Mela");
+frutti.add("Pera");
+frutti.add("Banana");
+console.log([...frutti]);
+
+frutti.delete("Banana")
+console.log([...frutti]);
+
+const x = frutti.has("Pera");
+console.log(x)
+
+console.log(frutti.size);
+
+const a = [1,2,3,4,5];
+const b = [3,4,5,6,7];
+
+//const completedTodos = userTodos.filter((todo) => {return todo.completed === true})
+const setb = new Set(b);
+const newArray = a.filter((x) => {
+    return setb.has(x)
+})
+console.log(newArray);
+
+//Map — contare occorrenze
+//Scrivi contaParole(testo):
+//• Divide in parole (.toLowerCase().split(' '))
+//• Conta ogni parola con una Map
+//• Restituisce la Map
+//Scrivi trovaPiùFrequente(mappa) — la parola col massimo conteggio.
+//Test: "il gatto e il cane e il gatto mangia il pesce"
+
+const testo1 = "il gatto e il cane e il gatto mangia il pesce"
+
+function contaParole(testo) {
+    const parole = testo.toLowerCase().split(' ');
+    const mappa = new Map();
+    for (const parola of parole) {
+        if (mappa.has(parola)) {
+            const valore = mappa.get(parola)
+            mappa.set(parola, valore + 1)
+        } else {
+          mappa.set(parola, 1)
+        }
+    }
+    return mappa
+}
+console.log(contaParole(testo1));
+
+//Closure base — contatore
+//Crea creaContatore(iniziale=0) che restituisce un oggetto con:
+//• incrementa() — +1
+//• decrementa() — -1
+//• valore() — restituisce il valore
+//• reset() — torna al valore iniziale
+//Il valore deve essere PRIVATO. Crea due contatori separati e dimostra che sono indipendenti.
+
+function creaContatore(iniziale = 0) {
+    let valore = iniziale;
+    return {
+        incrementa: function() {
+            valore++;
+        },
+        decrementa: function() {
+            valore--;
+        },
+        valore: function() {
+            return valore;
+        },
+        reset: function() {
+            valore = iniziale;
+        }
+    }
+}
+const c1 = creaContatore(0);
+c1.incrementa();
+c1.incrementa();
+console.log(c1.valore());
+c1.decrementa();
+console.log(c1.valore());
+c1.reset();
+console.log(c1.valore());
 */
+//Modulo pattern
+//Crea creaCarrello() che gestisce un array privato e restituisce:
+//• aggiungi(prodotto, prezzo)
+//• rimuovi(nomeProdotto)
+//• totale() — somma prezzi
+//• lista() — stampa tutti
