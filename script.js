@@ -912,10 +912,87 @@ c1.decrementa();
 console.log(c1.valore());
 c1.reset();
 console.log(c1.valore());
-*/
+
 //Modulo pattern
 //Crea creaCarrello() che gestisce un array privato e restituisce:
 //• aggiungi(prodotto, prezzo)
 //• rimuovi(nomeProdotto)
 //• totale() — somma prezzi
 //• lista() — stampa tutti
+
+function creaCarrello() {
+    let carrello = [];
+    return {
+        aggiungi: function(prodotto, prezzo) {
+            carrello.push({nome: prodotto, prezzo: prezzo });
+        },
+        rimuovi: function(prodotto) {
+            carrello = carrello.filter((x) => {
+                return x.nome !== prodotto
+            })
+        },
+        totale: function() {
+            return carrello.reduce((tot, item) => {
+                return tot + item.prezzo;
+            }, 0);
+        },
+        lista: function() {
+            carrello.forEach((a) => {
+                console.log(a.nome, a.prezzo)
+            })
+        }
+    }
+}
+
+const c = creaCarrello();
+c.aggiungi("pane", 2);
+c.aggiungi("latte", 1.5);
+c.lista();
+console.log(c.totale());
+console.log(`Il totale è ${c.totale()}`);
+*/
+
+//Crea una funzione creaRegistro() che contiene un array privato di studenti {nome:"Mario", voto: 7}
+//La funzione deve restituire: aggiungi(nome,voto), rimuovi(nome), media() e lista() e migliorStudente()
+
+function creaRegistro() {
+    let studenti = [];
+    return {
+        aggiungi: function(nome, voto) {
+            studenti.push({nome: nome, voto: voto });
+        },
+        rimuovi: function(nome) {
+            let stutendi = studenti.filter((x) => {
+                return x.nome !== nome;
+            });
+        },
+        media: function(voto) {
+            const somma = studenti.reduce((tot, s) => {
+                return tot + s.voto;
+            }, 0);
+            return somma / studenti.length;
+        },
+        lista: function() {
+            studenti.forEach((a) => {
+                console.log(a.nome, a.voto);
+            });
+        },
+        migliorStudente: function() {
+            let migliore = null;
+            studenti.forEach((s) => {
+                if(migliore === null || s.voto > migliore.voto) {
+                    migliore = s;
+                }
+            });
+
+            return migliore;
+        }
+    }
+}
+const registro = creaRegistro();
+registro.aggiungi("Mario", 7);
+registro.aggiungi("Filippo", 10);
+console.log("LISTA:");
+registro.lista();
+console.log("MEDIA:")
+console.log(registro.media())
