@@ -1,9 +1,3 @@
-const bottone = document.getElementById("btn");
-const testo = document.getElementById("testo");
-
-bottone.addEventListener("click", function () {
-    testo.textContent = "";
-});
 /*
 let nome1 = 'Marco';
 let eta = 30;
@@ -950,7 +944,7 @@ c.aggiungi("latte", 1.5);
 c.lista();
 console.log(c.totale());
 console.log(`Il totale è ${c.totale()}`);
-*/
+
 
 //Crea una funzione creaRegistro() che contiene un array privato di studenti {nome:"Mario", voto: 7}
 //La funzione deve restituire: aggiungi(nome,voto), rimuovi(nome), media() e lista() e migliorStudente()
@@ -995,4 +989,52 @@ registro.aggiungi("Filippo", 10);
 console.log("LISTA:");
 registro.lista();
 console.log("MEDIA:")
-console.log(registro.media())
+console.log(registro.media());
+
+//Clousure nei loop
+//Questo stampa "5" cinque volte: for (var i=0; i<5; i++){setTimeout(() => console.log(i),0)}
+//Sistema in 3 modi: 1.Sostituisci var con let. 2.Funzione factory che cattura n. 3.[0,1,2,3,4].forEach(...)
+
+for(var i=0; i<5; i++) {
+    setTimeout(() => console.log("con var", i), 2000)
+}
+for(let i=0; i<5; i++) {
+    setTimeout(() => console.log("con let", i), 0)
+}
+*/
+//Esercizi col DOM
+//Usa gli elementi nel sandbox:
+//• Cambia il testo del titolo in "Modificato con JS!"
+//• Cambia il colore del paragrafo a #378ADD
+//• Aggiungi la classe "h1" al div box
+//• Crea un nuovo <li> "Elemento aggiunto" e appendilo alla lista
+
+const bottone = document.getElementById("btn");
+const testo = document.getElementById("testo");
+const titolo = document.getElementById("titolo");
+const box = document.querySelector(".box");
+const lista = document.getElementById("lista");
+const li = document.getElementById("li");
+
+bottone.addEventListener("click", function () {
+    testo.textContent = "un programmatore";
+    titolo.textContent = "Modificato con JS!";
+    testo.classList.add("sfondo-azzurro");
+    
+    const elementi = document.querySelectorAll("#lista li");
+    let esiste = false;
+
+    elementi.forEach((li) => {
+        if (li.textContent === "Elemento aggiunto") {
+            esiste = true;
+        }
+    });
+
+    if(!esiste) {
+        const li = document.createElement("li");
+        li.textContent = "Elemento aggiunto";
+        lista.append(li);
+    }
+});
+
+

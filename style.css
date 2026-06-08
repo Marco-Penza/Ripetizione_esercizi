@@ -5,6 +5,9 @@ body {
     text-align: center;
     margin-top: 100px;
 }
+.sfondo-azzurro {
+    background-color: #378ADD;
+}
 
 button {
     padding: 10px 20px;
