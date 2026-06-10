@@ -14,3 +14,24 @@ button {
     font-size: 20px;
     cursor: pointer;
 }
+.pulse {
+    animation: pulse 0.4s ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

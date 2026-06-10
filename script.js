@@ -1013,7 +1013,7 @@ const bottone = document.getElementById("btn");
 const testo = document.getElementById("testo");
 const titolo = document.getElementById("titolo");
 const box = document.querySelector(".box");
-const lista = document.getElementById("lista");
+const lista = document.getElementById("lista1");
 const li = document.getElementById("li");
 
 bottone.addEventListener("click", function () {
@@ -1021,7 +1021,7 @@ bottone.addEventListener("click", function () {
     titolo.textContent = "Modificato con JS!";
     testo.classList.add("sfondo-azzurro");
     
-    const elementi = document.querySelectorAll("#lista li");
+    const elementi = document.querySelectorAll("#lista1 li");
     let esiste = false;
 
     elementi.forEach((li) => {
@@ -1037,4 +1037,69 @@ bottone.addEventListener("click", function () {
     }
 });
 
+//Usa il sandbox con bottone e paragrafo:
+//• Incrementa il contatore ad ogni click
+//• Dopo 5 click, cambia sfondo del bottone
+//• Mostra "Hai cliccato X volte!" nel paragrafo
+//• Il bottone Reset azzera tutto
 
+const bottone2 = document.getElementById("btn2");
+const reset = document.getElementById("reset");
+const testo1 = document.getElementById("testo1");
+let contatore = 0;
+
+bottone2.addEventListener("click", function () {
+    contatore++;
+    testo1.textContent = `hai cliccato ${contatore} volte`
+    if(contatore >= 5) {
+        bottone2.style.backgroundColor = "#378ADD";
+        void bottone2.offsetWidth;
+        bottone2.classList.add("pulse");
+    }
+});
+
+reset.addEventListener("click", function () {
+    contatore = 0;
+    testo1.textContent = "";
+    bottone2.style.backgroundColor = "";
+    bottone2.classList.remove("pulse");
+});
+
+//Usa il sandbox con casella e lista frutti:
+//• Ad ogni tasto, filtra i frutti che contengono il testo
+//• Case-insensitive
+//• Se nessun risultato, mostra "Nessun risultato"
+//• Casella vuota = mostra tutti
+
+const input = document.getElementById("input");
+const frutti = document.querySelectorAll("#lista2 li");
+const messaggio = document.getElementById("messaggio");
+
+input.addEventListener("input", function () {
+    const valore = input.value.toLocaleLowerCase();
+    let trovato = false;
+
+    frutti.forEach((frutto) => {
+        const testo = frutto.textContent.toLowerCase();
+        if (testo.includes(valore)) {
+            frutto.style.display = "block";
+            trovato = true;
+        } else {
+            frutto.style.display = "none";
+        }
+    });
+    
+    if (valore === "") {
+        frutti.forEach((frutto) => {
+            frutto.style.display = "block";
+        });
+        messaggio.textContent = "";
+        return;
+    }
+
+    if(!trovato) {
+        messaggio.textContent = "Nessun risultato";
+    } else {
+        messaggio.textContent = "";
+    }
+});
