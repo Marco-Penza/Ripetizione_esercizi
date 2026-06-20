@@ -1001,7 +1001,7 @@ for(var i=0; i<5; i++) {
 for(let i=0; i<5; i++) {
     setTimeout(() => console.log("con let", i), 0)
 }
-*/
+
 //Esercizi col DOM
 //Usa gli elementi nel sandbox:
 //• Cambia il testo del titolo in "Modificato con JS!"
@@ -1103,3 +1103,4 @@ input.addEventListener("input", function () {
         messaggio.textContent = "";
     }
 });
+*/
