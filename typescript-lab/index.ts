@@ -71,7 +71,7 @@ function presentati(nome: string, eta: number): void {
     console.log(`Mi chiamo ${nome} ed ho ${eta} anni`);
 }
 presentati("Marco",32);
-*/
+
 
 //Union types e any
 //Crea:
@@ -95,3 +95,98 @@ function formatta(valore:string | number): string {
     //let y: unknown = "ciao";
     //y.toUpperCase(); // ERRORE
 } 
+    
+//Type assertion (as) e as const
+//Sperimenta con as e as const:
+//• Una risposta API arriva come unknown — usa as per dire a TS che struttura ha
+//• Crea un array COLORI con as const — prova a modificarlo (errore!)
+//• Crea un oggetto CONFIG as const — prova a cambiare una proprietà (errore!)
+//• Usa typeof COLORI[number] per ottenere il tipo union dai valori
+
+let risposta :unknown;
+
+risposta = {
+    nome: "Marco",
+    eta:25
+};
+
+risposta as { 
+    nome: string;
+     eta: number
+}; //permette di leggere nome ed eta pero ts si fida non verifica davvero i dati
+
+
+
+const COLORI = ["rosso", "verde", "blu"] as const;
+
+//COLORI.push("giallo"); errore
+
+const CONFIG = {
+    porta: 3000,
+    ambiente: "dev"
+} as const;
+
+type Colore = typeof COLORI[number];
+let c: Colore;
+
+c = "rosso";
+c = "blu";
+//c = "giallo";   errore
+*/
+
+//Interfacce base
+//Crea le interfacce e usale:
+//• Interfaccia Libro: titolo, autore, anno, pagine, disponibile
+//• Crea un array Libro[] con almeno 3 libri
+//• Una funzione cercaLibro(lista: Libro[], autore: string): Libro[]
+//• Una funzione stampaLibro(libro: Libro): void
+
+interface Libro {
+    titolo: string;
+    autore: string;
+    anno: number;
+    pagine: number;
+    disponibile: boolean;
+};
+
+const libro1: Libro = {
+    titolo: "Harry Potter",
+    autore: "Pippo",
+    anno: 1960,
+    pagine: 2000,
+    disponibile: true,
+};
+
+const libro2: Libro = {
+    titolo: "Avenger",
+    autore: "Iron Man",
+    anno: 1945,
+    pagine: 2500,
+    disponibile: true,
+};
+
+const libro3: Libro = {
+    titolo: "Godzilla",
+    autore: "Tom Cruise",
+    anno: 2020,
+    pagine: 3500,
+    disponibile: true,
+};
+
+const libri: Libro[] = [];
+libri.push(libro1, libro2, libro3);
+
+function cercaLibro(lista: Libro[], autore: string): Libro[] {
+    return lista.filter((libro) => {
+        return libro.autore.toLowerCase() === autore.toLowerCase()
+    })
+}
+
+//piu pulita vista con AI 
+//function cercaLibro(lista: Libro[], autore: string): Libro[] {
+//    return lista.filter(libro =>
+//        libro.autore.toLowerCase() === autore.toLowerCase()
+//    );
+//}
+
+
