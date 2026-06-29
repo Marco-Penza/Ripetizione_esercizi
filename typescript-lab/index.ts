@@ -132,7 +132,7 @@ let c: Colore;
 c = "rosso";
 c = "blu";
 //c = "giallo";   errore
-*/
+
 
 //Interfacce base
 //Crea le interfacce e usale:
@@ -182,11 +182,91 @@ function cercaLibro(lista: Libro[], autore: string): Libro[] {
     })
 }
 
-//piu pulita vista con AI 
-//function cercaLibro(lista: Libro[], autore: string): Libro[] {
-//    return lista.filter(libro =>
-//        libro.autore.toLowerCase() === autore.toLowerCase()
-//    );
-//}
+//  piu pulita vista con AI 
+//  function cercaLibro(lista: Libro[], autore: string): Libro[] {
+//      return lista.filter(libro =>
+//          libro.autore.toLowerCase() === autore.toLowerCase()
+//      );
+//  }
+
+const risultati = cercaLibro(libri, "Pippo");
+console.log(risultati);
+//  oppure console.log(cercaLibro(libri, "Pippo"));
 
 
+//Optional, readonly e metodi
+//Crea interfaccia Prodotto con:
+//• readonly id: number
+//• nome: string, prezzo: number
+//• descrizione?: string, categoria?: string (opzionali)
+//• Un metodo sconto(percentuale: number): number
+
+interface Prodotto {
+    readonly id: number,
+    nome: string,
+    prezzo: number,
+    descrizione?: string,
+    categoria?: string,
+    sconto(percentuale: number) :number
+}
+
+const prodotto1: Prodotto = {
+    id: 1,
+    nome: "telefono",
+    prezzo: 500,
+    descrizione: "Iphone 12",
+    categoria: "Cellulare",
+    sconto(percentuale: number) :number {
+        return this.prezzo - (this.prezzo * percentuale / 100)
+    }
+}
+
+const prodotto2: Prodotto = {
+    id:2,
+    nome: "Frigorifero",
+    prezzo: 1500,
+    categoria: "Frigoriferi",
+    sconto(percentuale: number) :number {
+        return this.prezzo - (this.prezzo * percentuale / 100)
+    }
+}
+const prodotto3: Prodotto = {
+    id:3,
+    nome: "Monitor TV",
+    prezzo: 3000,
+    descrizione: "Monitor usato",
+    sconto(percentuale: number) :number {
+        return this.prezzo - (this.prezzo * percentuale / 100)
+    }
+}
+
+prodotto2.sconto(10)
+
+//Estendere interfacce
+//Crea una gerarchia per un sistema utenti:
+//• Utente: id, nome, email, createdAt
+//• Moderatore extends Utente: permessi (string[])
+//• Admin extends Moderatore: livelloAccesso (number), puòBannare (boolean)
+
+//Crea una funzione descriviUtente(u: Utente) che funziona per tutti e 3 i tipi e usa 'in' per rilevare il tipo.
+*/
+
+interface Utente {
+    id: number,
+    nome: string,
+    email: string,
+    createdAt: Date
+}
+
+interface Moderatore extends Utente  {
+    permessi: string[]
+}
+
+interface Admin extends Moderatore {
+    livelloAccesso: number;
+    puòBannare: boolean;
+}
+function descriviUtente(u: Utente): void {
+    console.log(u.nome);
+    console.log(u.email);
+}
