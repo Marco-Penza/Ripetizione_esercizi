@@ -249,7 +249,7 @@ prodotto2.sconto(10)
 //• Admin extends Moderatore: livelloAccesso (number), puòBannare (boolean)
 
 //Crea una funzione descriviUtente(u: Utente) che funziona per tutti e 3 i tipi e usa 'in' per rilevare il tipo.
-*/
+
 
 interface Utente {
     id: number,
@@ -270,3 +270,136 @@ function descriviUtente(u: Utente): void {
     console.log(u.nome);
     console.log(u.email);
 }
+
+
+//Literal types ed Enum
+//Crea:
+//• type Direzione = "nord" | "sud" | "est" | "ovest"
+//• type Dimensione = "S" | "M" | "L" | "XL"
+//• enum StatoOrdine { InAttesa, InPreparazione, Spedito, Consegnato }
+//• Una funzione muovi(dir: Direzione, passi: number): string
+//• Una classe Ordine con dimensione e stato tipati
+
+type Direzione = "nord" | "sud" | "est" | "ovest"
+type Dimensione = "S" | "M" | "L" | "XL"
+
+enum StatoOrdine { InAttesa, InPreparazione, Spedito, Consegnato }
+
+function muovi(dir: Direzione, passi: number): string {
+    return `Ti sei mosso ${passi} passi verso ${dir}`;
+}
+
+class Ordine {
+    dimensione: Dimensione;
+    stato: StatoOrdine;
+
+    constructor(dimensione: Dimensione, stato: StatoOrdine) {
+        this.dimensione = dimensione;
+        this.stato = stato;
+    }
+}
+
+//esempio di utilizzo
+const ordine1 = new Ordine("M", StatoOrdine.InAttesa);
+console.log(ordine1)
+
+
+//Discriminated Unions
+//Crea un sistema notifiche con discriminated union:
+type Email = { tipo: "email"; destinatario: string; oggetto: string }
+type SMS = { tipo: "sms"; numero: string; testo: string }
+type Push = { tipo: "push"; titolo: string; corpo: string }
+type Notifica = Email | SMS | Push
+
+//inviaNotifica(n: Notifica): void con switch su n.tipo
+
+function inviaNotifica(n: Notifica): void {
+    switch (n.tipo) {
+        case "email":
+            console.log(`Email a ${n.destinatario}: ${n.oggetto}`);
+            break;
+        case "sms":
+            console.log(`SMS a ${n.numero}: ${n.testo}`);
+            break;
+        case "push":
+            console.log(`Push: ${n.titolo} - ${n.corpo}`);
+            break;
+    }
+}
+
+const email: Email = {
+    tipo: "email",
+    destinatario: "mario@mail.com",
+    oggetto: "Benvenuto!"
+};
+
+const sms: SMS = {
+    tipo: "sms",
+    numero: "3331234567",
+    testo: "Codice OTP: 1234"
+};
+
+const push: Push = {
+    tipo: "push",
+    titolo: "Nuovo messaggio",
+    corpo: "Hai una nuova notifica"
+};
+
+inviaNotifica(email);
+inviaNotifica(sms);
+inviaNotifica(push);
+
+//unzioni generiche <T>
+//Crea queste funzioni generiche:
+//• primo<T>(arr: T[]): T | undefined
+function primo<T>(arr: T[]): T | undefined {
+    return arr[0];
+}
+
+//• inverti<T>(arr: T[]): T[]
+function inverti<T>(arr: T[]): T[] {
+    return [...arr].reverse();
+}
+
+//• coppia<T,U>(a: T, b: U): {primo: T; secondo: U}
+function coppia<T, U>(a: T, b: U): { primo: T; secondo: U } {
+    return { primo: a, secondo: b};
+}
+
+//• filtra<T>(arr: T[], fn: (item: T) => boolean): T[]
+function filtra<T>(arr: T[], fn: (item: T) => boolean): T[] {
+    return arr.filter(fn);
+}
+
+//Testale con tipi diversi — nota che TS inferisce T automaticamente.
+
+*/
+
+//Crea una classe generica: class Repository<T> che rappresenta un piccolo "database" in memoria.
+//Deve avere:1 Una proprieta privata: contiene tutti gli elementi. 2 Un metodo aggiungi(item: T): void. 3 un metodo tutti(): T[]. 4 un metodo primo(): T | undefined
+
+class Repository<T> {
+    elementi: T[] = [];
+    aggiungi(item: T): void {
+        this.elementi.push(item);
+    }
+    tutti(): T[] {
+        return this.elementi;
+    }
+    primo(): T | undefined {
+        return this.elementi[0];
+    }
+}
+
+interface Libro {
+    titolo: string;
+    autore: string;
+}
+
+const repoLibri = new Repository<Libro>();
+repoLibri.aggiungi({
+    titolo: "1984",
+    autore: "Orwell"
+});
+console.log(repoLibri.tutti());
+console.log(repoLibri.primo());
